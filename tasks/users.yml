@@ -19,3 +19,4 @@
     state: present
   with_items: "{{ mysql_users }}"
   when: (item.requiressl is defined) and item.requiressl
+  no_log: true
