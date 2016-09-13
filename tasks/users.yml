@@ -7,8 +7,15 @@
     priv: "{{ item.priv | default('*.*:USAGE') }}"
     state: "{{ item.state | default('present') }}"
     append_privs: "{{ item.append_privs | default('no') }}"
-    ssl_ca: "{{ item.ssl_ca | default(None) }}"
-    ssl_cert: "{{ item.ssl_cert | default(None) }}"
-    ssl_key: "{{ item.ssl_key | default(None) }}"
   with_items: "{{ mysql_users }}"
   no_log: true
+
+- name: Require SSL connection for all SSL users.
+  mysql_user:
+    name: "{{ item.name }}"
+    host: "{{ item.host | default('localhost') }}"
+    append_privs: true
+    priv: "*.*:REQUIRESSL"
+    state: present
+  with_items: "{{ mysql_users }}"
+  when: (item.requiressl is defined) and item.requiressl
