@@ -98,7 +98,7 @@ innodb_log_buffer_size = {{ mysql_innodb_log_buffer_size }}
 innodb_flush_log_at_trx_commit = {{ mysql_innodb_flush_log_at_trx_commit }}
 innodb_lock_wait_timeout = {{ mysql_innodb_lock_wait_timeout }}
 
-{% if mysql_ssl_ca %}
+{% if mysql_ssl_ca is defined %}
 # SSL settings.
 ssl-ca={{ mysql_ssl_ca }}
 ssl-cert={{ mysql_ssl_cert }}
